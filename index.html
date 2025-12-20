@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админка — Создание приглашений</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --burgundy: #722f37;
+            --gold: #d4af37;
+            --gold-light: #f0e6c8;
+            --cream: #fdfbf7;
+            --dark: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(232, 196, 196, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #fdfbf7 0%, #f5efe6 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-container {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 50px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        .admin-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .admin-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 50px;
+            font-size: 15px;
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .guest-select-wrapper {
+            position: relative;
+        }
+
+        .guest-select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            pointer-events: none;
+            font-size: 12px;
+        }
+
+        select {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 16px;
+            background: #fafafa;
+            appearance: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: white;
+        }
+
+        .link-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: var(--gold-light);
+            border-radius: 16px;
+            display: none;
+        }
+
+        .link-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .link-label {
+            font-size: 13px;
+            color: var(--burgundy);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .link-input-wrapper {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .link-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid white;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            background: white;
+            color: var(--dark);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--gold) 0%, #c9a030 100%);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 10px;
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--burgundy);
+            border: 2px solid var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold-light);
+        }
+
+        .success-message {
+            color: var(--burgundy);
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .info-box {
+            background: #f8f8f8;
+            border-left: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: var(--burgundy);
+        }
+
+        .guest-name-preview {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: var(--burgundy);
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--gold-light);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .guest-name-preview.show {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .admin-container {
+                padding: 40px 30px;
+            }
+
+            .admin-title {
+                font-size: 32px;
+            }
+
+            .link-input-wrapper {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1 class="admin-title">Создание приглашений</h1>
+        <p class="admin-subtitle">Выберите гостя и получите персональную ссылку для отправки</p>
+
+        <div class="form-section">
+            <label class="form-label">Выберите гостя</label>
+            <div class="guest-select-wrapper">
+                <select id="guestSelect">
+                    <option value="">-- Выберите имя гостя --</option>
+                    <!-- 
+                        ВАЖНО: Добавьте или измените имена гостей в списке ниже.
+                        Просто скопируйте строку <option value="Имя">Имя</option> и измените имя.
+                    -->
+                    <option value="Анна">Анна</option>
+                    <option value="Дмитрий">Дмитрий</option>
+                    <option value="Мария">Мария</option>
+                    <option value="Алексей">Алексей</option>
+                    <option value="Елена">Елена</option>
+                    <option value="Иван">Иван</option>
+                    <option value="Ольга">Ольга</option>
+                    <option value="Сергей">Сергей</option>
+                    <option value="Татьяна">Татьяна</option>
+                    <option value="Андрей">Андрей</option>
+                    <option value="Наталья">Наталья</option>
+                    <option value="Владимир">Владимир</option>
+                    <!-- Добавьте больше имён здесь -->
+                </select>
+            </div>
+            <div class="guest-name-preview" id="guestPreview"></div>
+        </div>
+
+        <div class="link-section" id="linkSection">
+            <label class="link-label">Персональная ссылка для отправки</label>
+            <div class="link-input-wrapper">
+                <input type="text" class="link-input" id="linkInput" readonly>
+                <button class="btn" id="copyBtn">📋 Копировать</button>
+            </div>
+            <button class="btn btn-secondary" id="openBtn" style="width: 100%; margin-top: 10px;">👁️ Открыть приглашение</button>
+            <p class="success-message" id="successMessage">✓ Ссылка скопирована!</p>
+        </div>
+
+        <div class="info-box">
+            <strong>Как использовать:</strong><br>
+            1. Выберите имя гостя из списка<br>
+            2. Скопируйте персональную ссылку<br>
+            3. Отправьте ссылку гостю в мессенджере или по email<br>
+            4. Гость откроет приглашение со своим именем уже в тексте
+        </div>
+    </div>
+
+    <script>
+        const guestSelect = document.getElementById('guestSelect');
+        const linkSection = document.getElementById('linkSection');
+        const linkInput = document.getElementById('linkInput');
+        const copyBtn = document.getElementById('copyBtn');
+        const openBtn = document.getElementById('openBtn');
+        const successMessage = document.getElementById('successMessage');
+        const guestPreview = document.getElementById('guestPreview');
+
+        // Get current page URL base
+        const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+        const invitationUrl = baseUrl + 'invitation.html';
+
+        guestSelect.addEventListener('change', function() {
+            const selectedGuest = this.value;
+            
+            if (selectedGuest) {
+                // Show guest preview
+                guestPreview.textContent = `Приглашение для: ${selectedGuest}`;
+                guestPreview.classList.add('show');
+                
+                // Generate personal link
+                const personalLink = `${invitationUrl}?guest=${encodeURIComponent(selectedGuest)}`;
+                linkInput.value = personalLink;
+                linkSection.classList.add('show');
+                
+                // Update open button
+                openBtn.onclick = function() {
+                    window.open(personalLink, '_blank');
+                };
+            } else {
+                linkSection.classList.remove('show');
+                guestPreview.classList.remove('show');
+            }
+        });
+
+        copyBtn.addEventListener('click', function() {
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                navigator.clipboard.writeText(linkInput.value).then(function() {
+                    showSuccess();
+                });
+            } catch (err) {
+                // Fallback for older browsers
+                document.execCommand('copy');
+                showSuccess();
+            }
+        });
+
+        function showSuccess() {
+            successMessage.classList.add('show');
+            copyBtn.textContent = '✓ Скопировано!';
+            copyBtn.style.background = '#4caf50';
+            
+            setTimeout(function() {
+                successMessage.classList.remove('show');
+                copyBtn.textContent = '📋 Копировать';
+                copyBtn.style.background = '';
+            }, 2000);
+        }
+
+        // Allow manual selection for copying
+        linkInput.addEventListener('click', function() {
+            this.select();
+        });
+    </script>
+</body>
+</html>
