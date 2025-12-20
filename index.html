@@ -452,28 +452,48 @@
 
         /* Dress Code Carousel */
         .dresscode-carousel-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             position: relative;
-            padding: 0 60px;
         }
 
         .dresscode-carousel {
             position: relative;
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) rgba(0, 0, 0, 0.1);
+        }
+
+        .dresscode-carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .dresscode-carousel::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .dresscode-carousel::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
         }
 
         .dresscode-carousel-track {
             display: flex;
-            transition: transform 0.5s ease-in-out;
+            scroll-snap-type: x mandatory;
         }
 
         .dresscode-carousel-slide {
             min-width: 100%;
             height: 500px;
             position: relative;
+            flex-shrink: 0;
+            scroll-snap-align: start;
         }
 
         .dresscode-carousel-slide img {
@@ -481,40 +501,6 @@
             height: 100%;
             object-fit: cover;
             display: block;
-        }
-
-        .dresscode-carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: var(--gold);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .dresscode-carousel-btn:hover {
-            background: white;
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .dresscode-carousel-btn.prev {
-            left: 10px;
-        }
-
-        .dresscode-carousel-btn.next {
-            right: 10px;
         }
 
         .dresscode-carousel-dots {
@@ -836,21 +822,7 @@
             }
 
             .dresscode-carousel-container {
-                padding: 0 50px;
-            }
-
-            .dresscode-carousel-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-
-            .dresscode-carousel-btn.prev {
-                left: 5px;
-            }
-
-            .dresscode-carousel-btn.next {
-                right: 5px;
+                padding: 0 20px;
             }
 
             .dresscode-carousel-slide {
@@ -1026,12 +998,11 @@
         <h2 class="section-title">Дресс-код</h2>
         <p class="dresscode-text">
             Мы будем счастливы и благодарны, если вы поддержите цветовую палитру нашей свадьбы.<br>
-            Примеры образов для вашего вдохновения вы можете посмотреть ниже:
+            Примеры образов вы можете посмотреть ниже:
         </p>
         <div class="dresscode-carousel-container">
-            <div class="dresscode-carousel">
-                <button class="dresscode-carousel-btn prev" aria-label="Предыдущее фото">‹</button>
-                <div class="dresscode-carousel-track" id="dresscodeCarousel">
+            <div class="dresscode-carousel" id="dresscodeCarousel">
+                <div class="dresscode-carousel-track">
                     <div class="dresscode-carousel-slide">
                         <img src="dresscod/0996eac06c023577c8fdfcdb037a498b.jpg" alt="Пример образа 1">
                     </div>
@@ -1054,7 +1025,6 @@
                         <img src="dresscod/f2b5c79750af35514fdfaaee837b5294.jpg" alt="Пример образа 7">
                     </div>
                 </div>
-                <button class="dresscode-carousel-btn next" aria-label="Следующее фото">›</button>
             </div>
             <div class="dresscode-carousel-dots" id="dresscodeDots"></div>
         </div>
@@ -1180,57 +1150,49 @@
             mapContainer.innerHTML = '<iframe src="https://yandex.ru/map-widget/v1/?ll=48.658316%2C55.881594&z=15&pt=48.658316,55.881594&l=map" width="100%" height="100%" frameborder="0" allowfullscreen="true" style="position:relative; border-radius: 15px;"></iframe>';
         });
 
-        // Карусель для фото дресс-кода
+        // Карусель для фото дресс-кода со скроллом
         function initDresscodeCarousel() {
             const carousel = document.getElementById('dresscodeCarousel');
-            const prevBtn = document.querySelector('.dresscode-carousel-btn.prev');
-            const nextBtn = document.querySelector('.dresscode-carousel-btn.next');
             const dotsContainer = document.getElementById('dresscodeDots');
             
-            if (!carousel || !prevBtn || !nextBtn || !dotsContainer) return;
+            if (!carousel || !dotsContainer) return;
 
             const slides = carousel.querySelectorAll('.dresscode-carousel-slide');
-            let currentSlide = 0;
+            const track = carousel.querySelector('.dresscode-carousel-track');
 
             // Создаем точки навигации
             slides.forEach((_, index) => {
                 const dot = document.createElement('button');
                 dot.classList.add('dresscode-carousel-dot');
                 if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => goToSlide(index));
+                dot.addEventListener('click', () => {
+                    const slide = slides[index];
+                    slide.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+                });
                 dotsContainer.appendChild(dot);
             });
 
-            function updateCarousel() {
-                carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            // Обновляем активную точку при скролле
+            function updateActiveDot() {
+                const scrollLeft = carousel.scrollLeft;
+                const slideWidth = carousel.offsetWidth;
+                const currentSlide = Math.round(scrollLeft / slideWidth);
                 
-                // Обновляем активную точку
                 const dots = dotsContainer.querySelectorAll('.dresscode-carousel-dot');
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('active', index === currentSlide);
                 });
             }
 
-            function goToSlide(index) {
-                currentSlide = index;
-                updateCarousel();
-            }
+            // Обновляем активную точку при скролле
+            let scrollTimeout;
+            carousel.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(updateActiveDot, 100);
+            });
 
-            function nextSlide() {
-                currentSlide = (currentSlide + 1) % slides.length;
-                updateCarousel();
-            }
-
-            function prevSlide() {
-                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                updateCarousel();
-            }
-
-            prevBtn.addEventListener('click', prevSlide);
-            nextBtn.addEventListener('click', nextSlide);
-
-            // Автоматическая прокрутка (опционально)
-            // setInterval(nextSlide, 5000);
+            // Обновляем при загрузке
+            updateActiveDot();
         }
 
         // Инициализируем карусель после загрузки DOM
