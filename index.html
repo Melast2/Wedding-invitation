@@ -757,6 +757,18 @@
             image-rendering: crisp-edges;
         }
 
+        /* Для десктопа - показываем изображения полностью без обрезания */
+        @media (min-width: 769px) {
+            .dresscode-carousel-slide {
+                height: 600px;
+            }
+
+            .dresscode-carousel-slide img {
+                object-fit: contain;
+                background: var(--cream);
+            }
+        }
+
         .dresscode-carousel-dots {
             display: flex;
             justify-content: center;
