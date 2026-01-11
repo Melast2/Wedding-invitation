@@ -30,6 +30,66 @@
             color: var(--dark);
             line-height: 1.7;
             overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Сообщение для десктопа */
+        .desktop-message {
+            display: none;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 100%);
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .desktop-message-content {
+            max-width: 500px;
+            background: white;
+            border-radius: 24px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .desktop-message-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .desktop-message-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .desktop-message-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .desktop-message-qr {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--gold-light);
+            border-radius: 12px;
+        }
+
+        .desktop-message-qr-text {
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        /* Скрываем сообщение для десктопа */
+        .desktop-message {
+            display: none !important;
         }
 
         /* Hero Section */
@@ -96,9 +156,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 40px;
+            gap: 30px;
             margin: 50px 0;
-            max-width: 800px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
             width: 100%;
@@ -106,10 +166,10 @@
 
         .wedding-date-month {
             font-family: 'Raleway', sans-serif;
-            font-size: clamp(22px, 4.5vw, 36px);
+            font-size: clamp(20px, 4vw, 32px);
             color: var(--gold);
             text-transform: uppercase;
-            letter-spacing: 5px;
+            letter-spacing: 4px;
             font-weight: 500;
             flex: 1;
             text-align: right;
@@ -118,8 +178,8 @@
 
         .wedding-date-number {
             position: relative;
-            width: clamp(140px, 25vw, 200px);
-            height: clamp(140px, 25vw, 200px);
+            width: clamp(100px, 15vw, 140px);
+            height: clamp(100px, 15vw, 140px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -129,19 +189,19 @@
         .wedding-date-circle {
             width: 100%;
             height: 100%;
-            border: 3px solid var(--gold);
+            border: 2px solid var(--gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3);
         }
 
         .wedding-date-number-text {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(52px, 10vw, 80px);
+            font-size: clamp(40px, 8vw, 64px);
             color: var(--gold);
             font-weight: 500;
             position: relative;
@@ -151,13 +211,116 @@
 
         .wedding-date-year {
             font-family: 'Raleway', sans-serif;
-            font-size: clamp(22px, 4.5vw, 36px);
+            font-size: clamp(20px, 4vw, 32px);
             color: var(--gold);
-            letter-spacing: 5px;
+            letter-spacing: 4px;
             font-weight: 500;
             flex: 1;
             text-align: left;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .countdown-container {
+            margin: 50px auto;
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-container::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .countdown-container::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .countdown-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: clamp(14px, 2.5vw, 18px);
+            color: var(--dark);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 25px;
+            position: relative;
+        }
+
+        .countdown-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60px;
+            background: var(--dark);
+            opacity: 0.3;
+        }
+
+        .countdown-item:last-child {
+            padding-right: 0;
+        }
+
+        .countdown-item:first-child {
+            padding-left: 0;
+        }
+
+        .countdown-number {
+            font-family: 'Raleway', sans-serif;
+            font-size: clamp(42px, 8vw, 72px);
+            color: var(--dark);
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .countdown-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: clamp(12px, 2vw, 16px);
+            color: var(--dark);
+            text-transform: lowercase;
+            font-weight: 400;
+            opacity: 0.8;
         }
 
         .invitation-text {
@@ -588,6 +751,24 @@
             padding: 100px 20px;
         }
 
+        .rsvp-section .section-title {
+            color: var(--dark) !important;
+            text-shadow: none;
+        }
+
+        .rsvp-section .section-title::after {
+            background: var(--gold);
+        }
+
+        .rsvp-deadline {
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 40px;
+            font-size: 15px;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
         .rsvp-form {
             background: white;
             border-radius: 24px;
@@ -836,7 +1017,7 @@
             }
 
             .wedding-date {
-                gap: 25px;
+                gap: 20px;
                 margin: 40px 20px;
                 max-width: 100%;
             }
@@ -844,16 +1025,38 @@
             .wedding-date-month,
             .wedding-date-year {
                 font-size: 18px;
-                letter-spacing: 4px;
+                letter-spacing: 3px;
             }
 
             .wedding-date-number {
-                width: 120px;
-                height: 120px;
+                width: 90px;
+                height: 90px;
             }
 
             .wedding-date-number-text {
-                font-size: 42px;
+                font-size: 36px;
+            }
+
+            .countdown-container {
+                padding: 40px 30px;
+                margin: 40px 20px;
+            }
+
+            .countdown-title {
+                font-size: 12px;
+                margin-bottom: 30px;
+            }
+
+            .countdown-item {
+                padding: 0 15px;
+            }
+
+            .countdown-number {
+                font-size: 36px;
+            }
+
+            .countdown-label {
+                font-size: 12px;
             }
 
             .hero {
@@ -875,6 +1078,26 @@
     </style>
 </head>
 <body>
+    <!-- Сообщение для десктопа -->
+    <div class="desktop-message">
+        <div class="desktop-message-content">
+            <span class="desktop-message-icon">📱</span>
+            <h1 class="desktop-message-title">Приглашение доступно только на мобильных устройствах</h1>
+            <p class="desktop-message-text">
+                Дорогие гости! Это приглашение создано специально для просмотра на мобильных устройствах. 
+                Пожалуйста, откройте эту страницу на вашем смартфоне или планшете.
+            </p>
+            <div class="desktop-message-qr">
+                <div class="desktop-message-qr-text">Отсканируйте QR-код или отправьте ссылку на ваш телефон</div>
+                <p style="font-size: 13px; color: #888; margin-top: 10px;">
+                    Скопируйте ссылку из адресной строки и откройте её на мобильном устройстве
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основной контент (виден только на мобильных) -->
+    <div class="main-content">
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
@@ -895,6 +1118,27 @@
                     </div>
                 </div>
                 <div class="wedding-date-year">2026</div>
+            </div>
+            <div class="countdown-container">
+                <div class="countdown-title">ДО СВАДЬБЫ ОСТАЛОСЬ</div>
+                <div class="countdown-timer" id="countdownTimer">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">0</span>
+                        <span class="countdown-label">дни</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">0</span>
+                        <span class="countdown-label">часы</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">0</span>
+                        <span class="countdown-label">мин</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">0</span>
+                        <span class="countdown-label">сек</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="scroll-hint">
@@ -1077,8 +1321,8 @@
 
     <!-- RSVP Section -->
     <section class="rsvp-section">
-        <h2 class="section-title" style="color: white;">Анкета гостя</h2>
-        <p style="text-align: center; color: rgba(255,255,255,0.9); margin-bottom: 40px; font-size: 15px;">
+        <h2 class="section-title">Анкета гостя</h2>
+        <p class="rsvp-deadline">
             Просим подтвердить ваше присутствие до 23 мая 2026г.
         </p>
         <form id="rsvpForm" class="rsvp-form">
@@ -1148,12 +1392,52 @@
         <div class="footer-names">Эмиль & Екатерина</div>
         <p class="footer-text">С любовью ждём вас!</p>
     </footer>
+    </div> <!-- Конец main-content -->
 
     <script>
+        // Таймер обратного отсчета до свадьбы
+        function initCountdownTimer() {
+            const weddingDate = new Date('2026-07-23T17:00:00'); // 23 июля 2026, 17:00 (начало церемонии)
+            const daysElement = document.getElementById('days');
+            const hoursElement = document.getElementById('hours');
+            const minutesElement = document.getElementById('minutes');
+            const secondsElement = document.getElementById('seconds');
+
+            function updateCountdown() {
+                const now = new Date();
+                const timeLeft = weddingDate - now;
+
+                if (timeLeft <= 0) {
+                    daysElement.textContent = '0';
+                    hoursElement.textContent = '0';
+                    minutesElement.textContent = '0';
+                    secondsElement.textContent = '0';
+                    return;
+                }
+
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                daysElement.textContent = days;
+                hoursElement.textContent = hours < 10 ? '0' + hours : hours;
+                minutesElement.textContent = minutes < 10 ? '0' + minutes : minutes;
+                secondsElement.textContent = seconds < 10 ? '0' + seconds : seconds;
+            }
+
+            // Обновляем таймер сразу и затем каждую секунду
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
         // Яндекс.Карты через iframe (не требует API ключа)
         window.addEventListener('DOMContentLoaded', function() {
             const mapContainer = document.getElementById('map');
             mapContainer.innerHTML = '<iframe src="https://yandex.ru/map-widget/v1/?ll=48.658316%2C55.881594&z=15&pt=48.658316,55.881594&l=map" width="100%" height="100%" frameborder="0" allowfullscreen="true" style="position:relative; border-radius: 15px;"></iframe>';
+            
+            // Инициализируем таймер
+            initCountdownTimer();
         });
 
         // Карусель для фото дресс-кода со скроллом
@@ -1423,6 +1707,7 @@
         } else {
             initAllAnimations();
         }
+
     </script>
 </body>
 </html>
