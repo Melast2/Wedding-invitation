@@ -43,11 +43,16 @@
 
         /* Предотвращение зума на изображениях для iOS */
         img {
-            touch-action: none;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             user-select: none;
             pointer-events: auto;
+        }
+
+        /* Для обычных изображений запрещаем зум */
+        .location-photo,
+        img:not(.dresscode-carousel-slide img) {
+            touch-action: none;
         }
 
         /* Отключаем двойной тап зум для всех элементов */
@@ -726,9 +731,13 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            touch-action: none;
+            touch-action: pan-x;
             -webkit-touch-callout: none;
             pointer-events: auto;
+        }
+
+        .dresscode-carousel-slide {
+            touch-action: pan-x;
         }
 
         .dresscode-carousel-dots {
