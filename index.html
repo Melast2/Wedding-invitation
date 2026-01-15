@@ -51,7 +51,7 @@
 
         /* Для обычных изображений запрещаем зум */
         .location-photo,
-        img:not(.dresscode-carousel-slide img) {
+        img:not(.dresscode-slide img) {
             touch-action: none;
         }
 
@@ -192,14 +192,15 @@
         }
 
         .wedding-date-month {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(18px, 3.5vw, 28px);
-            color: var(--dark);
+            font-family: 'Raleway', sans-serif;
+            font-size: clamp(20px, 4vw, 32px);
+            color: var(--gold);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 400;
+            letter-spacing: 4px;
+            font-weight: 500;
             flex: 1;
             text-align: right;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .wedding-date-number {
@@ -223,57 +224,31 @@
             background: transparent;
         }
 
-        /* Текстурированный акварельный круг */
-        .wedding-date-circle::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 3px solid rgba(150, 150, 150, 0.4);
-            filter: blur(1px);
-            opacity: 0.6;
-        }
-
-        .wedding-date-circle::after {
-            content: '';
-            position: absolute;
-            width: calc(100% - 4px);
-            height: calc(100% - 4px);
-            border-radius: 50%;
-            border: 2px solid rgba(120, 120, 120, 0.3);
-            filter: blur(0.5px);
-            opacity: 0.5;
-        }
-
-        /* Текстура с крапинками */
         .wedding-date-circle {
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(150, 150, 150, 0.1) 1px, transparent 1px),
-                radial-gradient(circle at 60% 70%, rgba(150, 150, 150, 0.08) 1px, transparent 1px),
-                radial-gradient(circle at 80% 40%, rgba(150, 150, 150, 0.1) 1px, transparent 1px);
-            background-size: 15px 15px, 20px 20px, 12px 12px;
-            background-position: 0 0, 5px 5px, 10px 10px;
+            border: 2px solid var(--gold);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3);
         }
 
         .wedding-date-number-text {
-            font-family: 'Raleway', sans-serif;
-            font-size: clamp(42px, 8vw, 68px);
-            color: var(--dark);
-            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(40px, 8vw, 64px);
+            color: var(--gold);
+            font-weight: 500;
             position: relative;
             z-index: 2;
-            letter-spacing: -1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         .wedding-date-year {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(18px, 3.5vw, 28px);
-            color: var(--dark);
-            letter-spacing: 2px;
-            font-weight: 400;
+            font-family: 'Raleway', sans-serif;
+            font-size: clamp(20px, 4vw, 32px);
+            color: var(--gold);
+            letter-spacing: 4px;
+            font-weight: 500;
             flex: 1;
             text-align: left;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .countdown-container {
@@ -678,122 +653,82 @@
             line-height: 1.8;
         }
 
-        /* Dress Code Carousel */
-        .dresscode-carousel-container {
+        /* Dress Code Slideshow */
+        .dresscode-slideshow-container {
             max-width: 900px;
             margin: 0 auto;
             position: relative;
         }
 
-        .dresscode-carousel {
+        /* На мобильных - карусель на всю ширину экрана */
+        @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden;
+                width: 100%;
+            }
+
+            .section.dresscode-section {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                overflow: visible;
+            }
+
+            .dresscode-text {
+                padding: 0 20px;
+            }
+
+            .dresscode-slideshow-container {
+                width: 100%;
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            .dresscode-slideshow {
+                height: 400px;
+                border-radius: 0;
+            }
+        }
+
+        .dresscode-slideshow {
             position: relative;
-            overflow-x: auto;
-            overflow-y: hidden;
+            width: 100%;
+            height: 500px;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            scrollbar-color: var(--gold) rgba(0, 0, 0, 0.1);
-            touch-action: pan-x;
-            -webkit-touch-callout: none;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-        }
-
-        .dresscode-carousel::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .dresscode-carousel::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        .dresscode-carousel::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 10px;
-        }
-
-        .dresscode-carousel-track {
-            display: flex;
-            scroll-snap-type: x mandatory;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-        }
-
-        .dresscode-carousel-slide {
-            min-width: 100%;
-            height: 500px;
-            position: relative;
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            touch-action: pan-x;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-            will-change: transform;
             overflow: hidden;
+            background: var(--cream);
         }
 
-        .dresscode-carousel-slide img {
+        .dresscode-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            display: block;
-            touch-action: pan-x;
-            -webkit-touch-callout: none;
-            pointer-events: auto;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-            will-change: transform;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            background: var(--cream);
         }
 
-        /* Для десктопа - показываем изображения полностью без обрезания */
+        .dresscode-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .dresscode-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            object-position: center;
+        }
+
+        /* Для десктопа - увеличиваем высоту */
         @media (min-width: 769px) {
-            .dresscode-carousel-slide {
+            .dresscode-slideshow {
                 height: 600px;
             }
-
-            .dresscode-carousel-slide img {
-                object-fit: contain;
-                background: var(--cream);
-            }
-        }
-
-        .dresscode-carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 30px;
-        }
-
-        .dresscode-carousel-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #ddd;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 0;
-        }
-
-        .dresscode-carousel-dot.active {
-            background: var(--gold);
-            transform: scale(1.2);
-        }
-
-        .dresscode-carousel-dot:hover {
-            background: var(--gold-chocolate);
         }
 
         /* Details Section */
@@ -1105,13 +1040,30 @@
                 font-size: 24px;
             }
 
-            .dresscode-carousel-container {
-                padding: 0 20px;
+            .section.dresscode-section {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
             }
 
-            .dresscode-carousel-slide {
-                height: 400px;
+            .dresscode-slideshow-container {
+                padding: 0;
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
             }
+
+            .dresscode-slideshow {
+                width: 100%;
+                max-width: 100%;
+                border-radius: 0;
+            }
+
+            .dresscode-slide {
+                width: 100%;
+                min-width: 100%;
+                flex: 0 0 100%;
+            }
+
 
             .wedding-date {
                 gap: 20px;
@@ -1347,33 +1299,30 @@
             Мы будем счастливы и благодарны, если вы поддержите цветовую палитру нашей свадьбы.<br>
             Примеры образов для вашего вдохновения можете посмотреть ниже:
         </p>
-        <div class="dresscode-carousel-container">
-            <div class="dresscode-carousel" id="dresscodeCarousel">
-                <div class="dresscode-carousel-track">
-                    <div class="dresscode-carousel-slide">
-                        <img src="dresscod/0996eac06c023577c8fdfcdb037a498b.jpg" alt="Пример образа 1">
-                    </div>
-                    <div class="dresscode-carousel-slide">
-                        <img src="dresscod/2c6ba15ceb3a5a7ac4234f5dd38b5f69.jpg" alt="Пример образа 2">
-                    </div>
-                    <div class="dresscode-carousel-slide">
-                        <img src="dresscod/34fa657f67e21a2d6efedf17eda550b0.jpg" alt="Пример образа 3">
-                    </div>
-                    <div class="dresscode-carousel-slide">
-                        <img src="dresscod/4a4f2d08fd0de00e45664d5c2bb01a2c.jpg" alt="Пример образа 4">
-                    </div>
-                    <div class="dresscode-carousel-slide">
-                        <img src="dresscod/5cb538a69ee8c0980a91231a072cef6c.jpg" alt="Пример образа 5">
-                    </div>
-                    <div class="dresscode-carousel-slide">
-                        <img src="dresscod/a2d89bb752fae61d69a80b0027bef135.jpg" alt="Пример образа 6">
-                    </div>
-                    <div class="dresscode-carousel-slide">
-                        <img src="dresscod/f2b5c79750af35514fdfaaee837b5294.jpg" alt="Пример образа 7">
-                    </div>
+        <div class="dresscode-slideshow-container">
+            <div class="dresscode-slideshow" id="dresscodeSlideshow">
+                <div class="dresscode-slide">
+                    <img src="dresscod/0996eac06c023577c8fdfcdb037a498b.jpg" alt="Пример образа 1">
+                </div>
+                <div class="dresscode-slide">
+                    <img src="dresscod/2c6ba15ceb3a5a7ac4234f5dd38b5f69.jpg" alt="Пример образа 2">
+                </div>
+                <div class="dresscode-slide">
+                    <img src="dresscod/34fa657f67e21a2d6efedf17eda550b0.jpg" alt="Пример образа 3">
+                </div>
+                <div class="dresscode-slide">
+                    <img src="dresscod/4a4f2d08fd0de00e45664d5c2bb01a2c.jpg" alt="Пример образа 4">
+                </div>
+                <div class="dresscode-slide">
+                    <img src="dresscod/5cb538a69ee8c0980a91231a072cef6c.jpg" alt="Пример образа 5">
+                </div>
+                <div class="dresscode-slide">
+                    <img src="dresscod/a2d89bb752fae61d69a80b0027bef135.jpg" alt="Пример образа 6">
+                </div>
+                <div class="dresscode-slide">
+                    <img src="dresscod/f2b5c79750af35514fdfaaee837b5294.jpg" alt="Пример образа 7">
                 </div>
             </div>
-            <div class="dresscode-carousel-dots" id="dresscodeDots"></div>
         </div>
     </section>
 
@@ -1537,56 +1486,36 @@
             initCountdownTimer();
         });
 
-        // Карусель для фото дресс-кода со скроллом
-        function initDresscodeCarousel() {
-            const carousel = document.getElementById('dresscodeCarousel');
-            const dotsContainer = document.getElementById('dresscodeDots');
-            
-            if (!carousel || !dotsContainer) return;
+        // Автоматическое слайдшоу для дресс-кода (без карусели/точек)
+        function initDresscodeSlideshow() {
+            const slideshow = document.getElementById('dresscodeSlideshow');
+            if (!slideshow) return;
 
-            const slides = carousel.querySelectorAll('.dresscode-carousel-slide');
-            const track = carousel.querySelector('.dresscode-carousel-track');
+            const slides = slideshow.querySelectorAll('.dresscode-slide');
+            if (!slides.length) return;
 
-            // Создаем точки навигации
-            slides.forEach((_, index) => {
-                const dot = document.createElement('button');
-                dot.classList.add('dresscode-carousel-dot');
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    const slide = slides[index];
-                    slide.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-                });
-                dotsContainer.appendChild(dot);
-            });
+            let currentSlide = 0;
 
-            // Обновляем активную точку при скролле
-            function updateActiveDot() {
-                const scrollLeft = carousel.scrollLeft;
-                const slideWidth = carousel.offsetWidth;
-                const currentSlide = Math.round(scrollLeft / slideWidth);
-                
-                const dots = dotsContainer.querySelectorAll('.dresscode-carousel-dot');
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentSlide);
-                });
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                slides[index].classList.add('active');
+                currentSlide = index;
             }
 
-            // Обновляем активную точку при скролле
-            let scrollTimeout;
-            carousel.addEventListener('scroll', () => {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(updateActiveDot, 100);
-            });
+            function nextSlide() {
+                const next = (currentSlide + 1) % slides.length;
+                showSlide(next);
+            }
 
-            // Обновляем при загрузке
-            updateActiveDot();
+            showSlide(0);
+            setInterval(nextSlide, 4000); // Смена каждые 4 секунды
         }
 
-        // Инициализируем карусель после загрузки DOM
+        // Инициализируем слайдшоу после загрузки DOM
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initDresscodeCarousel);
+            document.addEventListener('DOMContentLoaded', initDresscodeSlideshow);
         } else {
-            initDresscodeCarousel();
+            initDresscodeSlideshow();
         }
 
         // Обработка формы RSVP
